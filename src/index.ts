@@ -36,7 +36,7 @@ function constructDNSRecords(request: Request): Array<AddressableRecord> {
 	const url = new URL(request.url);
 	const params = url.searchParams;
 	const ip = params.get('ip');
-	const hostnames = params.get('hostname').split(",");
+	const hostnames = params.get('hostname');
 
 	if (ip === null || ip === undefined) {
 		throw new HttpError(422, 'The "ip" parameter is required and cannot be empty.');
@@ -46,12 +46,12 @@ function constructDNSRecords(request: Request): Array<AddressableRecord> {
 		throw new HttpError(422, 'The "hostname" parameter is required and cannot be empty.');
 	}
 
-	return hostnames.map(hostname => {
+	return hostnames.split(",").map(hostname => ({
 		content: ip,
 		name: hostname,
 		type: ip.includes('.') ? 'A' : 'AAAA',
 		ttl: 1,
-	});
+	}));
 }
 
 async function update(clientOptions: ClientOptions, newRecords: Array<AddressableRecord>): Promise<Response> {
