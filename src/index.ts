@@ -39,11 +39,11 @@ function constructDNSRecords(request: Request): Array<AddressableRecord> {
 	const hostnames = params.get("hostname");
 
 	if (ip === null || ip === undefined) {
-		throw new HttpError(422, "The "ip" parameter is required and cannot be empty.");
+		throw new HttpError(422, "The \"ip\" parameter is required and cannot be empty.");
 	}
 
 	if (hostnames === null || hostnames === undefined) {
-		throw new HttpError(422, "The "hostname" parameter is required and cannot be empty.");
+		throw new HttpError(422, "The \"hostname\" parameter is required and cannot be empty.");
 	}
 
 	return hostnames.split(",").map(hostname => ({
