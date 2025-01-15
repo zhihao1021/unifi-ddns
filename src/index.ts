@@ -35,7 +35,7 @@ function constructClientOptions(request: Request): ClientOptions {
 function constructDNSRecords(request: Request): Array<AddressableRecord> {
 	const url = new URL(request.url);
 	const params = url.searchParams;
-	const ip = params.get('ip');
+	const ip = params.get('ip') ?? params.get('myip');
 	const hostnames = params.get('hostname');
 
 	if (ip === null || ip === undefined) {
